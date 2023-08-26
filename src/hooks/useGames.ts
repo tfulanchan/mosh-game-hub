@@ -2,6 +2,7 @@ import { CanceledError } from "axios";
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-clients";
 import useData from "./useData";
+import { Genre } from "./useGenres";
 
 export interface Platform {
   id: number;
@@ -21,8 +22,9 @@ export interface Game {
 //   count: number;
 //   results: Game[];
 // }
-
-const useGames = () => useData<Game>('/games');
+// pass object to useData hook
+const useGames = (selectedGenre: Genre | null) => useData<Game>('/games', {params: {genres: selectedGenre?.id}}, [selectedGenre?.id,
+]);
 
 // {
 //   const [games, setGames] = useState<Game[]>([]);
