@@ -14,7 +14,7 @@ export interface Game {
   id: number;
   name: string;
   background_image: string;
-  parent_platforms: { platform: Platform }[]
+  parent_platforms: { platform: Platform }[];
   metacritic: number;
 }
 
@@ -23,8 +23,15 @@ export interface Game {
 //   results: Game[];
 // }
 // pass object to useData hook
-const useGames = (selectedGenre: Genre | null) => useData<Game>('/games', {params: {genres: selectedGenre?.id}}, [selectedGenre?.id,
-]);
+const useGames = (
+  selectedGenre: Genre | null,
+  selectedPlatform: Platform | null
+) =>
+  useData<Game>(
+    "/games",
+    { params: { genres: selectedGenre?.id, platforms: selectedPlatform?.id } },
+    [selectedGenre?.id, selectedPlatform?.id]
+  );
 
 // {
 //   const [games, setGames] = useState<Game[]>([]);
