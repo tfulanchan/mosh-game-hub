@@ -4,6 +4,7 @@ import useData from "../hooks/useData";
 import {
   Button,
   HStack,
+  Heading,
   Image,
   List,
   ListItem,
@@ -17,13 +18,15 @@ interface Props {
   selectedGenre: Genre | null;
 }
 
-const GenreList = ( { selectedGenre, onSelectGenre }: Props) => {
+const GenreList = ({ selectedGenre, onSelectGenre }: Props) => {
   // const { data } = useData<Genre>('/genres');
   const { data, isLoading, error } = useGenres();
   if (error) return null;
   if (isLoading) return <Spinner />;
 
   return (
+    <>
+    <Heading fontSize='2xl' marginBottom={3} >Genres</Heading>
     <List>
       {data.map((genre) => (
         <ListItem key={genre.id} paddingY="5px">
@@ -32,11 +35,14 @@ const GenreList = ( { selectedGenre, onSelectGenre }: Props) => {
             <Image
               boxSize="32px"
               borderRadius={8}
+// image fill the container to ratio              
+              objectFit='cover'
               src={genre.image_background}
             />
             //conditional styles
             <Button
-              fontWeight={genre.id === selectedGenre?.id ? 'bold': 'normal'}
+              whiteSpace='normal' textAlign='left'
+              fontWeight={genre.id === selectedGenre?.id ? "bold" : "normal"}
               // onClick={() => console.log(genre)}
               onClick={() => onSelectGenre(genre)}
               fontSize="m"
@@ -47,7 +53,9 @@ const GenreList = ( { selectedGenre, onSelectGenre }: Props) => {
           </HStack>
         </ListItem>
       ))}
-    </List>
+    </List>    
+    </>
+
   );
 };
 
